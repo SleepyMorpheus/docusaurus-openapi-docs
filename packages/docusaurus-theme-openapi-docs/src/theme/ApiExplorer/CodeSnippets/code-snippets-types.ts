@@ -31,7 +31,8 @@ export type CodeSampleLanguage =
   | "Scala"
   | "Shell"
   | "Swift"
-  | "TypeScript";
+  | "TypeScript"
+  | "Kestra";
 
 export interface Language {
   highlight: string;

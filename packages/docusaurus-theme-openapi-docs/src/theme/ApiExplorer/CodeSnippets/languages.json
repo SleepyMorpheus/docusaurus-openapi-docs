@@ -1286,5 +1286,16 @@
         ]
       }
     ]
+  },
+  {
+    "key": "kestra",
+    "label": "Kestra",
+    "syntax_mode": "text",
+    "variants": [
+      {
+        "key": "Request",
+        "options": []
+      }
+    ]
   }
 ]

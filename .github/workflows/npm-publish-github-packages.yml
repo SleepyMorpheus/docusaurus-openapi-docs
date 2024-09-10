@@ -2,7 +2,8 @@ name: Build and Publish Packages
 
 on:
   push:
-    # Sequence of patterns matched against refs/tags
+    branches:
+      - main
     tags:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
@@ -21,21 +22,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: '8'  # Specify the Node.js version
+          node-version: "18"
+          cache: "yarn"
 
-      # Navigate to the package folder and install dependencies
       - name: Install dependencies for ${{ matrix.package }}
         working-directory: ./packages/${{ matrix.package }}
-        run: npm install --legacy-peer-deps
+        run: yarn --prefer-offline
 
       # Build the package
       - name: Build ${{ matrix.package }}
         working-directory: ./packages/${{ matrix.package }}
-        run: npm run build
+        run: yarn run build
 
       # Zip the build output
       - name: Zip build output of ${{ matrix.package }}

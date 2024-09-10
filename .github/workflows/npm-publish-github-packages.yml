@@ -2,8 +2,6 @@ name: Build and Publish Packages
 
 on:
   push:
-    branches:
-      - main
     tags:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
@@ -40,7 +38,7 @@ jobs:
       # Zip the build output
       - name: Zip build output of ${{ matrix.package }}
         working-directory: ./packages/${{ matrix.package }}
-        run: zip -r ../${{ matrix.package }}.zip lib package.json babel.config.js
+        run: zip -r ../../${{ matrix.package }}.zip lib package.json babel.config.js
 
 
       - name: Release with Notes

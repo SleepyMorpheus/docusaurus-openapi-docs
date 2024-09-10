@@ -45,6 +45,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./${{ matrix.package }}.zip
+            ./${{ matrix.package }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

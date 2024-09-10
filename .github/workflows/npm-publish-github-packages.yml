@@ -30,7 +30,7 @@ jobs:
       # Navigate to the package folder and install dependencies
       - name: Install dependencies for ${{ matrix.package }}
         working-directory: ./packages/${{ matrix.package }}
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       # Build the package
       - name: Build ${{ matrix.package }}

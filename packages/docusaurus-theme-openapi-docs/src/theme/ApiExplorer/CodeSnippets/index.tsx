@@ -145,12 +145,9 @@ export const languageSet: Language[] = [
     language: "kestra",
     codeSampleLanguage: "Kestra",
     logoClass: "kestra",
-    options: {
-      followRedirect: true,
-      trimRequestBody: true,
-    },
+    options: {},
     variant: "Request",
-    variants: ["Request"],
+    variants: ["request"],
   },
 ];
 
@@ -424,6 +421,7 @@ function CodeSnippets({ postman, codeSamples }: Props) {
                 languageSet={mergedLangs}
                 lazy
               >
+                <span>{codeText}</span>
                 {lang.variants.map((variant, index) => {
                   return (
                     <CodeTab

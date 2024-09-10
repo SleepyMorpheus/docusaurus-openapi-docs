@@ -1,0 +1,51 @@
+name: Build and Publish Packages
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package:
+          - docusaurus-plugin-openapi-docs
+          - docusaurus-theme-openapi-docs
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Specify the Node.js version
+
+      # Navigate to the package folder and install dependencies
+      - name: Install dependencies for ${{ matrix.package }}
+        working-directory: ./packages/${{ matrix.package }}
+        run: npm install
+
+      # Build the package
+      - name: Build ${{ matrix.package }}
+        working-directory: ./packages/${{ matrix.package }}
+        run: npm run build
+
+      # Zip the build output
+      - name: Zip build output of ${{ matrix.package }}
+        working-directory: ./packages/${{ matrix.package }}
+        run: zip -r ../${{ matrix.package }}.zip ./build
+
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./${{ matrix.package }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

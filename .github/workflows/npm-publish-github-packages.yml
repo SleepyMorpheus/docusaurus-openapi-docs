@@ -38,7 +38,7 @@ jobs:
       # Zip the build output
       - name: Zip build output of ${{ matrix.package }}
         working-directory: ./packages/${{ matrix.package }}
-        run: tar -czf ../../${{ matrix.package }}.tar.gz lib package.json babel.config.js
+        run: tar -czf ../../${{ matrix.package }}.tar.gz lib package.json
 
 
       - name: Release with Notes

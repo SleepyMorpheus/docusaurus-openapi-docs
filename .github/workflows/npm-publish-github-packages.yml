@@ -1,0 +1,53 @@
+name: Build and Publish Packages
+
+on:
+  push:
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package:
+          - docusaurus-plugin-openapi-docs
+          - docusaurus-theme-openapi-docs
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "yarn"
+
+      - name: Install dependencies for ${{ matrix.package }}
+        working-directory: ./packages/${{ matrix.package }}
+        run: yarn --prefer-offline
+
+      # Build the package
+      - name: Build ${{ matrix.package }}
+        working-directory: ./packages/${{ matrix.package }}
+        run: yarn build
+
+      # Zip the build output
+      - name: Zip build output of ${{ matrix.package }}
+        working-directory: ./packages/${{ matrix.package }}
+        run: |
+          yarn pack -f out.tgz
+            mv out.tgz ../../${{ matrix.package }}.tar.gz
+
+
+
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./${{ matrix.package }}.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

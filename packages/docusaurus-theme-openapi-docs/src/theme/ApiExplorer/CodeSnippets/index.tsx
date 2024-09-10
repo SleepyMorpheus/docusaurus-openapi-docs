@@ -140,6 +140,18 @@ export const languageSet: Language[] = [
     variant: "RestMethod",
     variants: ["restmethod"],
   },
+  {
+    highlight: "kestra",
+    language: "kestra",
+    codeSampleLanguage: "Kestra",
+    logoClass: "kestra",
+    options: {
+      followRedirect: true,
+      trimRequestBody: true,
+    },
+    variant: "Request",
+    variants: ["Request"],
+  },
 ];
 
 export interface Props {

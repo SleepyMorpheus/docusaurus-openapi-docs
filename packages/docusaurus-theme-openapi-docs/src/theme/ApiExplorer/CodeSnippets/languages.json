@@ -1286,5 +1286,25 @@
         ]
       }
     ]
+  },
+  {
+    "key": "kestra",
+    "label": "Kestra",
+    "syntax_mode": "text",
+    "variants": [
+      {
+        "key": "Native",
+        "options": [
+          {
+            "name": "Set http task",
+            "id": "httpTask",
+            "type": "enum",
+            "availableOptions": ["Request", "Download"],
+            "default": "Request",
+            "description": "Select the http task to be used for in the example. Download is mainly used for large fetch requests"
+          }
+        ]
+      }
+    ]
   }
 ]
